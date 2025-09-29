@@ -12,15 +12,16 @@ import {
 } from "../components/ui/sidebar"
 import { Button } from "./ui/button";
 import { toast } from "sonner";
-// import { PopupUpdateLocation } from "./PopupUpdateLocation";
+import { PopupUpdateLocation } from "./PopupUpdateLocation";
 
 
 export function AppSidebar() {
-  const { locations, updateLocations, deleteSavedLocation } = useLocation();
+  const { locations, deleteSavedLocation } = useLocation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  // const [locationDataToUpdate, setlocationDataToUpdate] = useState(null);
-console.log(locations, 'LOCATIONS SIDEBAR')
+  const [locationDataToUpdate, setlocationDataToUpdate] = useState(null);
   const [loading, setLoading] = useState(false)
+  
+  console.log(locations, 'LOCATIONS SIDEBAR')
 
   async function delLocationHandler(location){
     setLoading(true)
@@ -44,7 +45,7 @@ console.log(locations, 'LOCATIONS SIDEBAR')
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="p-5 mb-4">
+          <SidebarGroupLabel className="p-8 mb-4">
             <img src="./e-topocart.png" />
           </SidebarGroupLabel>
           <div className="border-b border-gray-400" />
@@ -73,11 +74,11 @@ console.log(locations, 'LOCATIONS SIDEBAR')
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      {/* <PopupUpdateLocation
+      <PopupUpdateLocation
         open={isDialogOpen}
         setOpen={setIsDialogOpen}
         locationDataToUpdate={locationDataToUpdate}
-      /> */}
+      />
     </Sidebar>
   )
 }

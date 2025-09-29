@@ -65,6 +65,34 @@ export async function deleteLocation(location_id) {
     return data;
   } catch (error) {
     console.error('Erro ao deletar localização:', error);
-    throw new Error(`Ocorreu um erro: ${error.message}`);
+    throw error;
+  }
+}
+
+// Atualizar localização
+export async function updateLocations(updatedLocationData) {
+  if (!updatedLocationData || !updatedLocationData.id) {
+    throw new Error('Dados inválidos para atualização.');
+  }
+
+  try {
+    const response = await fetch(`/api/locations/${updatedLocationData.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedLocationData),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data?.message || 'Erro ao atualizar a localização.');
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Erro ao atualizar localização:', error);
+    throw error;
   }
 }
