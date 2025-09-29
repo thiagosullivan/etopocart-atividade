@@ -83,8 +83,18 @@ def health() -> dict:
     """Health"""
     return {"Health": "OK"}
 
-#Listar
+# Listar
 @app.get("/locations", tags=["Localizações"])
 def get_locations() -> list:
     """Listar localizações"""
     return LOCATIONS
+
+# Listar por ID
+@app.get("/locations/{location_id}", tags=["Localizações"])
+def get_location_by_id(location_id: str) -> dict:
+    """Listar localizações por ID"""
+    for location in LOCATIONS:
+        if location["id"] == location_id:
+            return location
+    
+    raise HTTPException(status_code=404, detail="Nenhuma localização foi encontrada")
