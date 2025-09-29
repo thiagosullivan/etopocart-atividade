@@ -3,14 +3,24 @@ import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import "leaflet/dist/leaflet.css";
 import PinIcon from '../../public/pin-icon.png'
 import { Icon } from 'leaflet';
+import { useState } from 'react';
+import { PopupAddLocation } from './PopupAddLocation';
+import { MapEventHandler } from './MapHandler';
 
 export const InteractiveMap = () => {
     const { locations } = useLocation();
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [newLocationData, setNewLocationData] = useState(null);
 
     const customIcon = new Icon({
       iconUrl: PinIcon,
       iconSize: [45, 45]
     })
+
+    const handleMapClick = (locationData) => {
+        setNewLocationData(locationData);
+        setIsDialogOpen(true);
+    };
 
   return (
     <div className='max-w-4/5 mx-auto'>
@@ -19,6 +29,7 @@ export const InteractiveMap = () => {
           attribution="Open Street Map"
           url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
+          <MapEventHandler onMapClick={handleMapClick} />
           
           {locations.map(location => (
             <Marker key={location.id} position={location.geometry.coordinates} icon={customIcon}>
@@ -31,6 +42,11 @@ export const InteractiveMap = () => {
             </Marker>
           ))}
       </MapContainer>
+      <PopupAddLocation
+        open={isDialogOpen}
+        setOpen={setIsDialogOpen}
+        newLocationData={newLocationData}
+      />
     </div>
   )
 }

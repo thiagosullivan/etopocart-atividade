@@ -1,19 +1,19 @@
 import { AppSidebar } from "./components/AppSidebar";
 import Footer from "./components/Footer";
-import { Button } from "./components/ui/button";
 import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
 import { ArrowBigLeft } from "lucide-react";
 import { LocationProvider } from "./contexts/LocationContext";
 import { InteractiveMap } from "./components/InteractiveMap";
+import { Toaster } from "@/components/ui/sonner"
 
 function App() {
 
   return (
     <LocationProvider>
       <SidebarProvider>
-          <div className="flex w-full">
+          <main className="flex w-full">
             <AppSidebar />
-            <main className="w-full">
+            <section className="w-full">
               <div className="h-screen"
                     style={{
                       backgroundImage: `
@@ -30,8 +30,9 @@ function App() {
                 <InteractiveMap />
               </div>
               <Footer />
-            </main>
-          </div>
+            </section>
+            <Toaster richColors />
+          </main>
         </SidebarProvider>
     </LocationProvider>
   )
