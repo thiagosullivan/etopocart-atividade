@@ -110,3 +110,15 @@ def create_location(location: Location) -> dict:
         return location_data
     except:
         raise HTTPException(status_code=500, detail="Erro interno ao criar localização")
+
+# Editar
+@app.put("/locations/{location_id}", tags=["Localizações"])
+def update_location(location_id: str, location: Location) -> dict:
+    """Atualizar localização"""
+    for index, loc in enumerate(LOCATIONS):
+        if loc["id"] == location_id:
+            updated_location = {**loc, **location.model_dump()}
+            updated_location["id"] = location_id
+            LOCATIONS[index] = updated_location
+            return updated_location
+    raise HTTPException(status_code=404, detail="Localização não encontrada")
