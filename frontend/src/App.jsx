@@ -4,6 +4,7 @@ import { Button } from "./components/ui/button";
 import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
 import { ArrowBigLeft } from "lucide-react";
 import { LocationProvider } from "./contexts/LocationContext";
+import { InteractiveMap } from "./components/InteractiveMap";
 
 function App() {
 
@@ -26,7 +27,7 @@ function App() {
                   <ArrowBigLeft className="h-10 w-10" />
                   <h1 className="text-center text-xl font-bold ml-2"> Você pode verificar, excluir ou salvar os endereços no menu à esquerda</h1>
                 </div>
-                {/* <Locations /> */}
+                <InteractiveMap />
               </div>
               <Footer />
             </main>
