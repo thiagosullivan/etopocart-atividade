@@ -122,3 +122,13 @@ def update_location(location_id: str, location: Location) -> dict:
             LOCATIONS[index] = updated_location
             return updated_location
     raise HTTPException(status_code=404, detail="Localização não encontrada")
+
+# Deletar
+@app.delete("/locations/{location_id}", tags=["Localizações"])
+def remove_location(location_id: str) -> dict:
+    """Remover localização"""
+    for index, loc in enumerate(LOCATIONS):
+        if loc["id"] == location_id:
+            LOCATIONS.pop(index)
+            return {"message": "Localização removida com sucesso"}
+    raise HTTPException(status_code=404, detail="Localização não encontrada")
