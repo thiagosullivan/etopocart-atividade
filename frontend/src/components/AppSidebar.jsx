@@ -8,32 +8,33 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "../components/ui/sidebar"
-// import { useLocation } from "../hooks/use-location";
+import { useLocation } from "../hooks/use-location";
 import { Button } from "./ui/button";
 // import { PopupUpdateLocation } from "./PopupUpdateLocation";
 import { useState } from "react";
 
 
 export function AppSidebar() {
-//   const { locations, updateLocations, deleteSavedLocation } = useLocation();
+  const { locations, updateLocations, deleteSavedLocation } = useLocation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-//   const [locationDataToUpdate, setlocationDataToUpdate] = useState(null);
+  // const [locationDataToUpdate, setlocationDataToUpdate] = useState(null);
+console.log(locations, 'LOCATIONS SIDEBAR')
   const [loading, setLoading] = useState(false)
 
-//   async function delLocationHandler(location){
-//     setLoading(true)
-//     try {
-//       await deleteSavedLocation(location.id);
-//     } catch (error) {
-//       console.log(error)
-//     }
-//     setLoading(false)
-//   }
+  async function delLocationHandler(location){
+    setLoading(true)
+    try {
+      await deleteSavedLocation(location.id);
+    } catch (error) {
+      console.log(error)
+    }
+    setLoading(false)
+  }
   
-//   async function updateLocationHandler(location){
-//     setIsDialogOpen(true)
-//     setlocationDataToUpdate(location)
-//   }
+  async function updateLocationHandler(location){
+    setIsDialogOpen(true)
+    setlocationDataToUpdate(location)
+  }
 
   return (
     <Sidebar>
@@ -49,7 +50,7 @@ export function AppSidebar() {
               <p className="text-2xl">Marcações</p>
             </div>
             <SidebarMenu>
-              {/* {locations.map((location) => (
+              {locations.map((location) => (
                 <SidebarMenuItem key={location.id}>
                     <div className="flex justify-between border-t  pt-3 mt-5">
                       <p className="text-xl truncate">{location.properties.name}</p>
@@ -63,7 +64,7 @@ export function AppSidebar() {
                       </div>
                     </div>
                 </SidebarMenuItem>
-              ))} */}
+              ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
