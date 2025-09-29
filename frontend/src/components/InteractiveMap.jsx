@@ -1,11 +1,13 @@
-import { useLocation } from '../hooks/use-location';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
-import "leaflet/dist/leaflet.css";
-import PinIcon from '../../public/pin-icon.png'
-import { Icon } from 'leaflet';
 import { useState } from 'react';
+import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import { Icon } from 'leaflet';
+import "leaflet/dist/leaflet.css";
+
+import PinIcon from '../../public/pin-icon.png'
 import { PopupAddLocation } from './PopupAddLocation';
 import { MapEventHandler } from './MapHandler';
+
+import { useLocation } from '../hooks/use-location';
 
 export const InteractiveMap = () => {
     const { locations } = useLocation();

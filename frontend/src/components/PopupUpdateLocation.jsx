@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Loader2 } from "lucide-react";
-import { LocationContext } from "../contexts/LocationContext";
+import { toast } from "sonner";
 
 import { Button } from "./ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
-import { toast } from "sonner";
+
+import { LocationContext } from "../contexts/LocationContext";
 
 export function PopupUpdateLocation({ open, setOpen, locationDataToUpdate }) {
   const { updateSavedLocation } = useContext(LocationContext);

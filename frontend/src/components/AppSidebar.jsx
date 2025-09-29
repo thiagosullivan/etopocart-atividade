@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Loader2, MapPin, Pencil, Trash2 } from "lucide-react"
-import { useLocation } from "../hooks/use-location";
+import { toast } from "sonner";
+
 import {
   Sidebar,
   SidebarContent,
@@ -11,8 +12,9 @@ import {
   SidebarMenuItem,
 } from "../components/ui/sidebar"
 import { Button } from "./ui/button";
-import { toast } from "sonner";
 import { PopupUpdateLocation } from "./PopupUpdateLocation";
+
+import { useLocation } from "../hooks/use-location";
 
 
 export function AppSidebar() {
@@ -20,8 +22,6 @@ export function AppSidebar() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [locationDataToUpdate, setlocationDataToUpdate] = useState(null);
   const [loading, setLoading] = useState(false)
-  
-  console.log(locations, 'LOCATIONS SIDEBAR')
 
   async function delLocationHandler(location){
     setLoading(true)
@@ -37,8 +37,15 @@ export function AppSidebar() {
   }
   
   async function updateLocationHandler(location){
-    setIsDialogOpen(true)
-    setlocationDataToUpdate(location)
+    if(!location){
+      return
+    }
+    try {
+      setIsDialogOpen(true)
+      setlocationDataToUpdate(location)
+    } catch (error) { 
+      console.log(error)
+    }
   }
 
   return (

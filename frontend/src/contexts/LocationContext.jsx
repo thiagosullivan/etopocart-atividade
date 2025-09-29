@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+
 import { addLocations, deleteLocation, getLocations, updateLocations } from "../services/api";
 
 export const LocationContext = createContext();

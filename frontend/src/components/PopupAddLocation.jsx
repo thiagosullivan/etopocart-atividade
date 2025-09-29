@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner"
-import { LocationContext } from "../contexts/LocationContext";
 import { Loader2 } from "lucide-react";
+
 import { Button } from "./ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
+
+import { LocationContext } from "../contexts/LocationContext";
 
 export function PopupAddLocation({ open, setOpen, newLocationData }) {
   const { addLocation } = useContext(LocationContext);
@@ -21,6 +23,7 @@ export function PopupAddLocation({ open, setOpen, newLocationData }) {
 
   async function onSubmit(values) {
     setLoading(true)
+    
     try {
         const updatedLocationData = {
           ...newLocationData,
@@ -31,7 +34,6 @@ export function PopupAddLocation({ open, setOpen, newLocationData }) {
           },
         };
     
-        console.log(updatedLocationData, 'DADOS ATUALIZADOS');
         await addLocation(updatedLocationData);
         setOpen(false);
         form.reset();
