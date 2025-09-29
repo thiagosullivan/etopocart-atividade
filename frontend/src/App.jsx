@@ -1,4 +1,5 @@
 import { AppSidebar } from "./components/AppSidebar";
+import Footer from "./components/Footer";
 import { Button } from "./components/ui/button";
 import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
 import { ArrowBigLeft } from "lucide-react";
@@ -25,7 +26,7 @@ function App() {
               </div>
               {/* <Locations /> */}
             </div>
-              {/* <Footer /> */}
+            <Footer />
           </main>
         </div>
       </SidebarProvider>
