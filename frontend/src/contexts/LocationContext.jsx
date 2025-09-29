@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { addLocations, getLocations } from "../services/api";
+import { addLocations, deleteLocation, getLocations } from "../services/api";
 
 export const LocationContext = createContext();
 
@@ -34,6 +34,19 @@ export const LocationProvider = ({ children }) => {
         }
     };
 
+    // Deletar um endereço
+    const deleteSavedLocation = async (location_id) => {
+        setLoading(true);
+        try {
+            await deleteLocation(location_id)
+            setRefreshTrigger(prev => prev + 1);
+        } catch (error) {
+            throw new Error("Failed to retrieve data from the API.", { cause: error });
+        } finally {
+            setLoading(false);
+        }
+    }
+
 
     useEffect(() => {
         loadLocations();
@@ -42,6 +55,7 @@ export const LocationProvider = ({ children }) => {
     const value = {
         locations,
         addLocation,
+        deleteSavedLocation
     };
 
     return (

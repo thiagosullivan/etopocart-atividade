@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Loader2, MapPin, Pencil, Trash2 } from "lucide-react"
+import { useLocation } from "../hooks/use-location";
 import {
   Sidebar,
   SidebarContent,
@@ -8,10 +10,9 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "../components/ui/sidebar"
-import { useLocation } from "../hooks/use-location";
 import { Button } from "./ui/button";
+import { toast } from "sonner";
 // import { PopupUpdateLocation } from "./PopupUpdateLocation";
-import { useState } from "react";
 
 
 export function AppSidebar() {
@@ -27,6 +28,9 @@ console.log(locations, 'LOCATIONS SIDEBAR')
       await deleteSavedLocation(location.id);
     } catch (error) {
       console.log(error)
+      toast.error("Erro ao remover localização.")
+    } finally {
+      toast.success("Localização removida com sucesso!")
     }
     setLoading(false)
   }

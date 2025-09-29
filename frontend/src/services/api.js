@@ -5,7 +5,7 @@ export async function getLocations() {
     const response = await fetch('/api/locations');
     console.log(response, 'RESPONSE')
     if (!response.ok) {
-      throw new Error('Erro ao buscar localizações');
+      throw new Error('Erro ao buscar localizações.');
     }
     return await response.json();
   } catch (error) {
@@ -39,5 +39,32 @@ export async function addLocations(newLocation) {
   } catch (error) {
     console.error('Erro ao adicionar localização:', error);
     throw error;
+  }
+}
+
+// Deletar localização
+export async function deleteLocation(location_id) {
+  if (!location_id) {
+    throw new Error('ID da localização não fornecido.');
+  }
+
+  try {
+    const response = await fetch(`/api/locations/${location_id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data?.message || 'Erro ao deletar localização.');
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Erro ao deletar localização:', error);
+    throw new Error(`Ocorreu um erro: ${error.message}`);
   }
 }
