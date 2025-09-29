@@ -98,3 +98,15 @@ def get_location_by_id(location_id: str) -> dict:
             return location
     
     raise HTTPException(status_code=404, detail="Nenhuma localização foi encontrada")
+
+# Criar
+@app.post("/locations/", tags=["Localizações"])
+def create_location(location: Location) -> dict:
+    """Criar localização"""
+    try:
+        location_data = location.model_dump()
+        location_data["id"] = generate_short_id()
+        LOCATIONS.append(location_data)
+        return location_data
+    except:
+        raise HTTPException(status_code=500, detail="Erro interno ao criar localização")
