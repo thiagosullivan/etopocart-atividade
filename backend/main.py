@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, APIRouter
 from pydantic import BaseModel
 import string
 import random
@@ -10,13 +10,17 @@ app = FastAPI()
 
 frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
 
+origins = ["http://localhost:5173", frontend_url]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+router = APIRouter(prefix="/api")
 
 LOCATIONS = [
     {
@@ -81,19 +85,19 @@ def generate_short_id(length=3):
             return short_id
         
 # Health
-@app.get("/health", tags=["Health"])
+@router.get("/health", tags=["Health"])
 def health() -> dict:
     """Health"""
     return {"Health": "OK"}
 
 # Listar
-@app.get("/locations", tags=["Localizações"])
+@router.get("/locations", tags=["Localizações"])
 def get_locations() -> list:
     """Listar localizações"""
     return LOCATIONS
 
 # Listar por ID
-@app.get("/locations/{location_id}", tags=["Localizações"])
+@router.get("/locations/{location_id}", tags=["Localizações"])
 def get_location_by_id(location_id: str) -> dict:
     """Listar localizações por ID"""
     for location in LOCATIONS:
@@ -103,7 +107,7 @@ def get_location_by_id(location_id: str) -> dict:
     raise HTTPException(status_code=404, detail="Nenhuma localização foi encontrada")
 
 # Criar
-@app.post("/locations/", tags=["Localizações"])
+@router.post("/locations", tags=["Localizações"])
 def create_location(location: Location) -> dict:
     """Criar localização"""
     try:
@@ -115,7 +119,7 @@ def create_location(location: Location) -> dict:
         raise HTTPException(status_code=500, detail="Erro interno ao criar localização")
 
 # Editar
-@app.put("/locations/{location_id}", tags=["Localizações"])
+@router.put("/locations/{location_id}", tags=["Localizações"])
 def update_location(location_id: str, location: Location) -> dict:
     """Atualizar localização"""
     for index, loc in enumerate(LOCATIONS):
@@ -127,7 +131,7 @@ def update_location(location_id: str, location: Location) -> dict:
     raise HTTPException(status_code=404, detail="Localização não encontrada")
 
 # Deletar
-@app.delete("/locations/{location_id}", tags=["Localizações"])
+@router.delete("/locations/{location_id}", tags=["Localizações"])
 def remove_location(location_id: str) -> dict:
     """Remover localização"""
     for index, loc in enumerate(LOCATIONS):
@@ -135,3 +139,5 @@ def remove_location(location_id: str) -> dict:
             LOCATIONS.pop(index)
             return {"message": "Localização removida com sucesso"}
     raise HTTPException(status_code=404, detail="Localização não encontrada")
+
+app.include_router(router)
